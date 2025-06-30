@@ -12,6 +12,6 @@ fun ListTabContent() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("여기에 이미지 갤러리 표시")
+        Text("여기에 리스트를 표시합니다")
     }
 }
