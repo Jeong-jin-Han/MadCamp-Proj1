@@ -8,5 +8,70 @@
     "name": "맛있는 분식",
     "category": "분식",
     "address": "서울 마포구 양화로 99"
+  },
+  {
+    "name": "청년 다방",
+    "category": "분식",
+    "address": "서울 관악구 남부순환로 202"
+  },
+  {
+    "name": "버거 히어로",
+    "category": "패스트푸드",
+    "address": "서울 서초구 강남대로 321"
+  },
+  {
+    "name": "블루베리 카페",
+    "category": "카페",
+    "address": "서울 동작구 상도로 45"
+  },
+  {
+    "name": "초밥 공방",
+    "category": "일식",
+    "address": "서울 종로구 삼일대로 12"
+  },
+  {
+    "name": "왕돈까스 명가",
+    "category": "일식",
+    "address": "서울 영등포구 영중로 33"
+  },
+  {
+    "name": "오래된 빵집",
+    "category": "베이커리",
+    "address": "서울 성북구 정릉로 88"
+  },
+  {
+    "name": "한식 대가",
+    "category": "한식",
+    "address": "서울 중구 명동길 9"
+  },
+  {
+    "name": "야시장 꼬치",
+    "category": "길거리 음식",
+    "address": "서울 은평구 통일로 543"
+  },
+  {
+    "name": "도쿄라멘",
+    "category": "일식",
+    "address": "서울 송파구 백제고분로 34"
+  },
+  {
+    "name": "루프탑 카페",
+    "category": "카페",
+    "address": "서울 마포구 월드컵북로 25"
+  },
+  {
+    "name": "미니 베이글",
+    "category": "베이커리",
+    "address": "서울 노원구 한글비석로 100"
+  },
+  {
+    "name": "분식천국",
+    "category": "분식",
+    "address": "서울 도봉구 마들로 222"
+  },
+  {
+    "name": "포차거리",
+    "category": "술집",
+    "address": "서울 강서구 화곡로 77"
   }
 ]
