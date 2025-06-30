@@ -45,6 +45,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.composed
 import androidx.compose.ui.platform.debugInspectorInfo
+//import androidx.compose.ui.text.style.TextOverflow
 //import androidx.compose.ui.unit.Dp
 //import androidx.compose.ui.unit.dp
 
@@ -128,13 +129,13 @@ fun MainTabs() {
     Column {
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-            indicator = { tabPositions ->
-                TabRowDefaults.SecondaryIndicator(
-                    Modifier
-                        .tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
+//            indicator = { tabPositions ->
+//                TabRowDefaults.SecondaryIndicator(
+//                    Modifier
+//                        .tabIndicatorOffset(tabPositions[pagerState.currentPage]),
+//                    color = MaterialTheme.colorScheme.primary
+//                )
+//            }
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -164,17 +165,32 @@ fun MainTabs() {
 }
 @Composable
 fun ListTabContent() {
-    Text("여기에 리스트 표시")
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("여기에 이미지 갤러리 표시")
+    }
 }
 
 @Composable
 fun GalleryTabContent() {
-    Text("여기에 이미지 갤러리 표시")
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("여기에 이미지 갤러리 표시")
+    }
 }
 
 @Composable
 fun FreeTabContent() {
-    Text("자유 주제 탭입니다")
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("자유 주제 탭입니다")
+    }
 }
 
 fun Modifier.tabIndicatorOffset(
