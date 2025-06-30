@@ -95,8 +95,8 @@ fun MainTabs() {
     val tabs = listOf("리스트", "갤러리", "자유")
     val pagerState = rememberPagerState(pageCount = {tabs.size})
     val coroutineScope = rememberCoroutineScope()
-
     Column {
+        Spacer(modifier = Modifier.height(24.dp)) // ← 상단에 여백 추가
         TabRow(
             selectedTabIndex = pagerState.currentPage,
 //            indicator = { tabPositions ->
