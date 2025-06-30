@@ -4,54 +4,24 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.madcampproj1.ui.theme.MadCampProj1Theme
-
-import androidx.compose.foundation.Image
-//import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.*
-//import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.runtime.rememberCoroutineScope
-
-import androidx.compose.foundation.pager.*
-//import com.google.accompanist.pager.HorizontalPager
-//import com.google.accompanist.pager.rememberPagerState
-//import androidx.compose.material3.TabRow
-//import androidx.compose.foundation.pager.rememberPagerState
-//import androidx.compose.material3.Tab
-import androidx.compose.material3.*
-
-import kotlinx.coroutines.launch
-//import androidx.compose.material3.tabIndicatorOffset
-
-import androidx.compose.animation.core.*
-//import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.unit.*
-//import androidx.compose.ui.draw.clipToBounds
-//import androidx.compose.ui.layout.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.composed
-import androidx.compose.ui.platform.debugInspectorInfo
-//import androidx.compose.ui.text.style.TextOverflow
-//import androidx.compose.ui.unit.Dp
-//import androidx.compose.ui.unit.dp
-
-//import androidx.compose.foundation.ExperimentalFoundationApi
-
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import com.example.madcampproj1.ui.theme.MadCampProj1Theme
+import kotlinx.coroutines.launch
+
 
 
 class MainActivity : ComponentActivity() {
