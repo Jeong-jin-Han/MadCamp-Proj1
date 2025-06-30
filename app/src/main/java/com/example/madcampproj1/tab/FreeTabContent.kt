@@ -15,3 +15,6 @@ fun FreeTabContent() {
         Text("자유 주제 탭입니다")
     }
 }
+
+// free에서 navigation으로 라우팅하는 것 해보기
+// 무한 스크롤
