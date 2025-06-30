@@ -69,7 +69,7 @@ data class Message(val auth: String, val body: String)
 fun MessageCard(mSg: Message) {
 Row {
     Image(
-        painter = painterResource(id=R.drawable.my_image),
+        painter = painterResource(id=R.drawable.image1),
         contentDescription = "profile image",
         modifier = Modifier
             .size(120.dp),  // 가로, 세로 모두 120dp로 설정
