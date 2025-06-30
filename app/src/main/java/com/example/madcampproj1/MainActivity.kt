@@ -1,5 +1,9 @@
 package com.example.madcampproj1
 
+
+import com.example.madcampproj1.tab.ListTabContent
+import com.example.madcampproj1.tab.GalleryTabContent
+import com.example.madcampproj1.tab.FreeTabContent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -133,35 +137,7 @@ fun MainTabs() {
         }
     }
 }
-@Composable
-fun ListTabContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("여기에 이미지 갤러리 표시")
-    }
-}
 
-@Composable
-fun GalleryTabContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("여기에 이미지 갤러리 표시")
-    }
-}
-
-@Composable
-fun FreeTabContent() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("자유 주제 탭입니다")
-    }
-}
 
 fun Modifier.tabIndicatorOffset(
     currentTabPosition: TabPosition
