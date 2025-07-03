@@ -139,26 +139,26 @@ fun MainTabs() {
 }
 
 
-fun Modifier.tabIndicatorOffset(
-    currentTabPosition: TabPosition
-): Modifier = composed(
-    inspectorInfo = debugInspectorInfo {
-        name = "tabIndicatorOffset"
-        value = currentTabPosition
-    }
-) {
-    val currentTabWidth by animateDpAsState(
-        targetValue = currentTabPosition.width,
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing),
-        label = ""
-    )
-    val indicatorOffset by animateDpAsState(
-        targetValue = currentTabPosition.left,
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing),
-        label = ""
-    )
-    fillMaxWidth()
-        .wrapContentSize(Alignment.BottomStart)
-        .offset { IntOffset(indicatorOffset.roundToPx(), 0) }
-        .width(currentTabWidth)
-}
+//fun Modifier.tabIndicatorOffset(
+//    currentTabPosition: TabPosition
+//): Modifier = composed(
+//    inspectorInfo = debugInspectorInfo {
+//        name = "tabIndicatorOffset"
+//        value = currentTabPosition
+//    }
+//) {
+//    val currentTabWidth by animateDpAsState(
+//        targetValue = currentTabPosition.width,
+//        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing),
+//        label = ""
+//    )
+//    val indicatorOffset by animateDpAsState(
+//        targetValue = currentTabPosition.left,
+//        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing),
+//        label = ""
+//    )
+//    fillMaxWidth()
+//        .wrapContentSize(Alignment.BottomStart)
+//        .offset { IntOffset(indicatorOffset.roundToPx(), 0) }
+//        .width(currentTabWidth)
+//}

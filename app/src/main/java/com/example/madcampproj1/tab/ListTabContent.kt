@@ -101,7 +101,8 @@ fun ListTabContent() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(bottom = 80.dp) // 👈 하단 여백 추가!
     ) {
         items(placeList) { place ->
             Column {
