@@ -57,6 +57,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("androidx.compose.material:material-icons-extended")
+
     // build.gradle(:app) 파일에 추가 (Compose 버전에 맞춰 버전 조정 가능)
     // implementation("com.google.accompanist:accompanist-pager:0.32.0")
 //    implementation("com.google.accompanist:accompanist-pager:0.27.1")
