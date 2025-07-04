@@ -168,36 +168,28 @@ import androidx.compose.ui.Alignment
 //        }
 //    }
 //}
+
+fun loadIngredientsFromAssets(context: Context): List<Ingredient> {
+    val jsonString = context.assets.open("ingredients.json")
+        .bufferedReader().use { it.readText() }
+
+    val gson = Gson()
+    val listType = object : TypeToken<List<Ingredient>>() {}.type
+    return gson.fromJson(jsonString, listType)
+}
+
 data class Ingredient(val name: String, var isChecked: Boolean)
 
 
 @Composable
 fun ListTabContent() {
-    // ✅ rememberSaveable로 체크 상태를 저장
-    var ingredients by rememberSaveable {
-        mutableStateOf(
-            listOf(
-                Ingredient("계란", false),
-                Ingredient("우유", false),
-                Ingredient("치즈", false),
-                Ingredient("스팸", false),
-                Ingredient("참치캔", false),
-                Ingredient("소시지", false),
-                Ingredient("두부", false),
-                Ingredient("밥", false),
-                Ingredient("양파", false),
-                Ingredient("대파", false),
-                Ingredient("당근", false),
-                Ingredient("감자", false),
-                Ingredient("김치", false),
-                Ingredient("청양고추 / 일반고추", false),
-                Ingredient("상추", false),
-                Ingredient("양배추", false),
-                Ingredient("팽이버섯", false),
-                Ingredient("느타리버섯 / 양송이버섯", false),
-                Ingredient("사과사", false)
-            )
-        )
+    val context = LocalContext.current
+
+    var ingredients by remember { mutableStateOf<List<Ingredient>>(emptyList()) }
+
+    // 처음 1회만 JSON 로드
+    LaunchedEffect(Unit) {
+        ingredients = loadIngredientsFromAssets(context)
     }
 
     LazyColumn {
@@ -206,7 +198,6 @@ fun ListTabContent() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        // ✅ 클릭하면 체크 상태 토글
                         ingredients = ingredients.toMutableList().also {
                             it[index] = it[index].copy(isChecked = !it[index].isChecked)
                         }
@@ -230,3 +221,63 @@ fun ListTabContent() {
         }
     }
 }
+
+//@Composable
+//fun ListTabContent() {
+//    // ✅ rememberSaveable로 체크 상태를 저장
+//    var ingredients by rememberSaveable {
+//        mutableStateOf(
+//            listOf(
+//                Ingredient("계란", false),
+//                Ingredient("우유", false),
+//                Ingredient("치즈", false),
+//                Ingredient("스팸", false),
+//                Ingredient("참치캔", false),
+//                Ingredient("소시지", false),
+//                Ingredient("두부", false),
+//                Ingredient("밥", false),
+//                Ingredient("양파", false),
+//                Ingredient("대파", false),
+//                Ingredient("당근", false),
+//                Ingredient("감자", false),
+//                Ingredient("김치", false),
+//                Ingredient("청양고추 / 일반고추", false),
+//                Ingredient("상추", false),
+//                Ingredient("양배추", false),
+//                Ingredient("팽이버섯", false),
+//                Ingredient("느타리버섯 / 양송이버섯", false),
+//                Ingredient("사과사", false)
+//            )
+//        )
+//    }
+//
+//    LazyColumn {
+//        itemsIndexed(ingredients) { index, item ->
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .clickable {
+//                        // ✅ 클릭하면 체크 상태 토글
+//                        ingredients = ingredients.toMutableList().also {
+//                            it[index] = it[index].copy(isChecked = !it[index].isChecked)
+//                        }
+//                    }
+//                    .padding(16.dp),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = item.name,
+//                    modifier = Modifier.weight(1f)
+//                )
+//                Checkbox(
+//                    checked = item.isChecked,
+//                    onCheckedChange = { isChecked ->
+//                        ingredients = ingredients.toMutableList().also {
+//                            it[index] = it[index].copy(isChecked = isChecked)
+//                        }
+//                    }
+//                )
+//            }
+//        }
+//    }
+//}
