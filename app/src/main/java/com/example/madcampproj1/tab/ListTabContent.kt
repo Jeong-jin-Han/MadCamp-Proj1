@@ -223,6 +223,28 @@ import androidx.compose.ui.Alignment
 //}
 
 
+
+//data class Ingredient(
+//    val name: String,
+//    val storage: String,
+//    var isChecked: Boolean
+//)
+
+data class Ingredient(
+    val name: String,
+    val category: String,
+    val storage: String,
+    var isChecked: Boolean
+)
+
+val categoryGroups = mapOf(
+    "채소" to listOf("채소"),
+    "육류와 가공육" to listOf("육류", "가공육"),
+    "유제품과 가공식품" to listOf("유제품", "가공식품"),
+    "양념류" to listOf("장류", "조미료"),
+    "기타" to listOf("통조림", "곡류", "면류", "해산물", "건조식품", "베이커리", "발효식품")
+)
+
 fun loadIngredientsFromAssets(context: Context): List<Ingredient> {
     val jsonString = context.assets.open("ingredients.json")
         .bufferedReader().use { it.readText() }
@@ -232,11 +254,72 @@ fun loadIngredientsFromAssets(context: Context): List<Ingredient> {
     return gson.fromJson(jsonString, listType)
 }
 
-data class Ingredient(
-    val name: String,
-    val storage: String,
-    var isChecked: Boolean
-)
+//@Composable
+//fun ListTabContent(
+//    selectedIngredients: MutableState<Set<String>>,
+//    ingredientsState: MutableState<List<Ingredient>>,
+//    isLoaded: MutableState<Boolean>
+//) {
+//    val context = LocalContext.current
+//
+////    // 초기 1회만 JSON에서 로드
+////    LaunchedEffect(Unit) {
+////        val loaded = loadIngredientsFromAssets(context)
+////        ingredientsState.value = loaded
+////    }
+////    val isLoaded = remember { mutableStateOf(false) }
+//
+//    LaunchedEffect(Unit) {
+//        if (!isLoaded.value) {
+//            val loaded = loadIngredientsFromAssets(context)
+//            ingredientsState.value = loaded
+//            isLoaded.value = true
+//        }
+//    }
+//
+//    val ingredients = ingredientsState.value
+//
+//    LazyColumn {
+//        itemsIndexed(ingredients) { index, item ->
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .clickable {
+//                        val updated = item.copy(isChecked = !item.isChecked)
+//                        ingredientsState.value = ingredients.toMutableList().also {
+//                            it[index] = updated
+//                        }
+//
+//                        selectedIngredients.value = if (updated.isChecked) {
+//                            selectedIngredients.value + updated.name
+//                        } else {
+//                            selectedIngredients.value - updated.name
+//                        }
+//                    }
+//                    .padding(16.dp),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(item.name, Modifier.weight(1f))
+//                Checkbox(
+//                    checked = item.isChecked,
+//                    onCheckedChange = { checked ->
+//                        val updated = item.copy(isChecked = checked)
+//                        ingredientsState.value = ingredients.toMutableList().also {
+//                            it[index] = updated
+//                        }
+//
+//                        selectedIngredients.value = if (checked) {
+//                            selectedIngredients.value + updated.name
+//                        } else {
+//                            selectedIngredients.value - updated.name
+//                        }
+//                    }
+//                )
+//            }
+//        }
+//    }
+//}
+
 
 
 @Composable
@@ -246,13 +329,6 @@ fun ListTabContent(
     isLoaded: MutableState<Boolean>
 ) {
     val context = LocalContext.current
-
-//    // 초기 1회만 JSON에서 로드
-//    LaunchedEffect(Unit) {
-//        val loaded = loadIngredientsFromAssets(context)
-//        ingredientsState.value = loaded
-//    }
-//    val isLoaded = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (!isLoaded.value) {
@@ -264,46 +340,89 @@ fun ListTabContent(
 
     val ingredients = ingredientsState.value
 
-    LazyColumn {
-        itemsIndexed(ingredients) { index, item ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        val updated = item.copy(isChecked = !item.isChecked)
-                        ingredientsState.value = ingredients.toMutableList().also {
-                            it[index] = updated
-                        }
+    val categoryGroups = mapOf(
+        "채소" to listOf("채소"),
+        "육류와 가공육" to listOf("육류", "가공육"),
+        "유제품과 가공식품" to listOf("유제품", "가공식품"),
+        "양념류" to listOf("장류", "조미료"),
+        "기타" to listOf("통조림", "곡류", "면류", "해산물", "건조식품", "베이커리", "발효식품")
+    )
 
-                        selectedIngredients.value = if (updated.isChecked) {
-                            selectedIngredients.value + updated.name
-                        } else {
-                            selectedIngredients.value - updated.name
-                        }
-                    }
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(item.name, Modifier.weight(1f))
-                Checkbox(
-                    checked = item.isChecked,
-                    onCheckedChange = { checked ->
-                        val updated = item.copy(isChecked = checked)
-                        ingredientsState.value = ingredients.toMutableList().also {
-                            it[index] = updated
-                        }
+    val groupedIngredients = remember(ingredients) {
+        categoryGroups.mapValues { (_, subcategories) ->
+            ingredients.filter { it.category in subcategories }
+                .groupBy { it.category }  // 하위 카테고리 기준으로 그룹핑
+        }
+    }
 
-                        selectedIngredients.value = if (checked) {
-                            selectedIngredients.value + updated.name
-                        } else {
-                            selectedIngredients.value - updated.name
-                        }
-                    }
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        groupedIngredients.forEach { (mainCategory, subGroup) ->
+            item {
+                Text(
+                    text = "🔹 $mainCategory",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(12.dp)
                 )
+            }
+
+            subGroup.forEach { (subCategory, items) ->
+                item {
+                    Text(
+                        text = "   ▶ $subCategory",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(start = 20.dp, bottom = 4.dp)
+                    )
+                }
+
+                itemsIndexed(items) { index, item ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                val updated = item.copy(isChecked = !item.isChecked)
+                                val updatedList = ingredients.toMutableList()
+                                val realIndex = ingredients.indexOfFirst { it.name == item.name }
+                                if (realIndex != -1) {
+                                    updatedList[realIndex] = updated
+                                    ingredientsState.value = updatedList
+                                }
+
+                                selectedIngredients.value = if (updated.isChecked) {
+                                    selectedIngredients.value + updated.name
+                                } else {
+                                    selectedIngredients.value - updated.name
+                                }
+                            }
+                            .padding(horizontal = 24.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(item.name, Modifier.weight(1f))
+                        Checkbox(
+                            checked = item.isChecked,
+                            onCheckedChange = { checked ->
+                                val updated = item.copy(isChecked = checked)
+                                val updatedList = ingredients.toMutableList()
+                                val realIndex = ingredients.indexOfFirst { it.name == item.name }
+                                if (realIndex != -1) {
+                                    updatedList[realIndex] = updated
+                                    ingredientsState.value = updatedList
+                                }
+
+                                selectedIngredients.value = if (checked) {
+                                    selectedIngredients.value + updated.name
+                                } else {
+                                    selectedIngredients.value - updated.name
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
     }
 }
+
+
 
 
 //@Composable
