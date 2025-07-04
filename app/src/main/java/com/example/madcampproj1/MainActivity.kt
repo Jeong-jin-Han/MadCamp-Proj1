@@ -37,6 +37,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Kitchen
 
+import com.example.madcampproj1.tab.Ingredient
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,23 +78,23 @@ data class Message(val auth: String, val body: String)
 // Column, Row, Box 를 사용할 수 있음
 @Composable
 fun MessageCard(mSg: Message) {
-Row {
-    Image(
-        painter = painterResource(id=R.drawable.image1),
-        contentDescription = "profile image",
-        modifier = Modifier
-            .size(120.dp),  // 가로, 세로 모두 120dp로 설정
-        contentScale = ContentScale.Fit,  // 잘리지 않고 맞게 축소됨
-    )
-    
-    // image 와 작성자 정보 사이에 공란 추가
-    Spacer(modifier = Modifier.width(8.dp))
+    Row {
+        Image(
+            painter = painterResource(id=R.drawable.image1),
+            contentDescription = "profile image",
+            modifier = Modifier
+                .size(120.dp),  // 가로, 세로 모두 120dp로 설정
+            contentScale = ContentScale.Fit,  // 잘리지 않고 맞게 축소됨
+        )
 
-    Column {
-        Text(text = mSg.auth)
-        Text(text = mSg.body)
+        // image 와 작성자 정보 사이에 공란 추가
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Column {
+            Text(text = mSg.auth)
+            Text(text = mSg.body)
+        }
     }
-}
 
 }
 
@@ -229,11 +230,82 @@ fun PreviewMessageCard() {
 //        .width(currentTabWidth)
 //}
 
+//@Composable
+//fun MainTabs(innerPadding: PaddingValues) {
+//    val tabs = listOf("리스트", "갤러리", "자유")
+//    var selectedTabIndex by remember { mutableStateOf(0) }
+//    var isPopupVisible by remember { mutableStateOf(false) }
+//    val selectedIngredients = remember { mutableStateOf(setOf<String>()) }
+//    val ingredientsState = remember { mutableStateOf<List<Ingredient>>(emptyList()) }
+//
+//
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .padding(innerPadding)
+//    ) {
+//        // 🧊 상단 아이콘 영역
+//        SharedHeader(
+//            isPopupVisible = isPopupVisible,
+//            onFridgeClick = { isPopupVisible = !isPopupVisible },
+//            onAddClick = { /* + 버튼 나중에 */ }
+//        )
+//
+//        // 🔽 팝업 (냉장/냉동)
+//        AnimatedVisibility(visible = isPopupVisible) {
+////            FridgePopup()
+//            FridgePopup(
+//                selectedIngredients = selectedIngredients.value,
+//                ingredients = ingredientsState.value
+//            )
+//        }
+//
+//
+//        // ✅ 콘텐츠 (리스트/갤러리/자유)
+//        Box(modifier = Modifier.weight(1f)) {
+////            when (selectedTabIndex) {
+////                0 -> ListTabContent(selectedIngredients = selectedIngredients)
+////                1 -> GalleryTabContent()
+////                2 -> FreeTabContent()
+////            }
+//            when (selectedTabIndex) {
+//                0 -> {
+//                    ListTabContent(selectedIngredients = selectedIngredients)
+//                }
+//                1 -> {
+//                    GalleryTabContent()
+//                }
+//                2 -> {
+//                    FreeTabContent()
+//                }
+//            }
+//        }
+//
+//        // 🔽 하단 탭
+//        TabRow(
+//            selectedTabIndex = selectedTabIndex,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            tabs.forEachIndexed { index, title ->
+//                Tab(
+//                    text = { Text(title) },
+//                    selected = selectedTabIndex == index,
+//                    onClick = { selectedTabIndex = index }
+//                )
+//            }
+//        }
+//    }
+//}
+
 @Composable
 fun MainTabs(innerPadding: PaddingValues) {
     val tabs = listOf("리스트", "갤러리", "자유")
     var selectedTabIndex by remember { mutableStateOf(0) }
     var isPopupVisible by remember { mutableStateOf(false) }
+
+    // ✅ 공통 상태
+    val selectedIngredients = remember { mutableStateOf(setOf<String>()) }
+    val ingredientsState = remember { mutableStateOf<List<Ingredient>>(emptyList()) }
 
     Column(
         modifier = Modifier
@@ -247,21 +319,27 @@ fun MainTabs(innerPadding: PaddingValues) {
             onAddClick = { /* + 버튼 나중에 */ }
         )
 
-        // 🔽 팝업 (냉장/냉동)
+        // 🔽 팝업 (냉장 / 냉동)
         AnimatedVisibility(visible = isPopupVisible) {
-            FridgePopup()
+            FridgePopup(
+                selectedIngredients = selectedIngredients.value,
+                ingredients = ingredientsState.value
+            )
         }
 
-        // ✅ 콘텐츠 (리스트/갤러리/자유)
+        // ✅ 콘텐츠 영역 (탭에 따라)
         Box(modifier = Modifier.weight(1f)) {
             when (selectedTabIndex) {
-                0 -> ListTabContent()
+                0 -> ListTabContent(
+                    selectedIngredients = selectedIngredients,
+                    ingredientsState = ingredientsState
+                )
                 1 -> GalleryTabContent()
                 2 -> FreeTabContent()
             }
         }
 
-        // 🔽 하단 탭
+        // ⬇️ 하단 탭
         TabRow(
             selectedTabIndex = selectedTabIndex,
             modifier = Modifier.fillMaxWidth()
@@ -276,6 +354,7 @@ fun MainTabs(innerPadding: PaddingValues) {
         }
     }
 }
+
 
 @Composable
 fun SharedHeader(
@@ -298,9 +377,60 @@ fun SharedHeader(
         }
     }
 }
+//
+//@Composable
+//fun FridgePopup() {
+//    Column(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .background(Color(0xFFE0F7FA))
+//            .padding(16.dp)
+//    ) {
+//        Text("냉장", style = MaterialTheme.typography.titleMedium)
+//        LazyRow {
+//            items(listOf("계란", "우유", "버터")) { item ->
+//                Box(
+//                    modifier = Modifier
+//                        .padding(8.dp)
+//                        .background(Color.White)
+//                        .border(1.dp, Color.Gray)
+//                        .padding(8.dp)
+//                ) {
+//                    Text(item)
+//                }
+//            }
+//        }
+//
+//        Spacer(modifier = Modifier.height(12.dp))
+//
+//        Text("냉동", style = MaterialTheme.typography.titleMedium)
+//        LazyRow {
+//            items(listOf("만두", "떡", "닭가슴살")) { item ->
+//                Box(
+//                    modifier = Modifier
+//                        .padding(8.dp)
+//                        .background(Color.White)
+//                        .border(1.dp, Color.Gray)
+//                        .padding(8.dp)
+//                ) {
+//                    Text(item)
+//                }
+//            }
+//        }
+//    }
+//}
+
+data class Ingredient(
+    val name: String,
+    val storage: String,
+    var isChecked: Boolean
+)
 
 @Composable
-fun FridgePopup() {
+fun FridgePopup(selectedIngredients: Set<String>, ingredients: List<Ingredient>) {
+    val fridgeItems = ingredients.filter { it.name in selectedIngredients && it.storage == "냉장" }
+    val freezerItems = ingredients.filter { it.name in selectedIngredients && it.storage == "냉동" }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -309,34 +439,31 @@ fun FridgePopup() {
     ) {
         Text("냉장", style = MaterialTheme.typography.titleMedium)
         LazyRow {
-            items(listOf("계란", "우유", "버터")) { item ->
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .background(Color.White)
-                        .border(1.dp, Color.Gray)
-                        .padding(8.dp)
-                ) {
-                    Text(item)
-                }
+            items(fridgeItems) { item ->
+                TextBox(item.name)
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(Modifier.height(12.dp))
 
         Text("냉동", style = MaterialTheme.typography.titleMedium)
         LazyRow {
-            items(listOf("만두", "떡", "닭가슴살")) { item ->
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .background(Color.White)
-                        .border(1.dp, Color.Gray)
-                        .padding(8.dp)
-                ) {
-                    Text(item)
-                }
+            items(freezerItems) { item ->
+                TextBox(item.name)
             }
         }
+    }
+}
+
+@Composable
+fun TextBox(text: String) {
+    Box(
+        modifier = Modifier
+            .padding(8.dp)
+            .background(Color.White)
+            .border(1.dp, Color.Gray)
+            .padding(8.dp)
+    ) {
+        Text(text)
     }
 }

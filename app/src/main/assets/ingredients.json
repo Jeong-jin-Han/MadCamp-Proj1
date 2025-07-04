@@ -59,5 +59,6 @@
   { "name": "빵", "category": "베이커리", "storage": "실온" },
   { "name": "부추", "category": "채소", "storage": "냉장" },
   { "name": "만두", "category": "가공식품", "storage": "냉동" },
-  { "name": "떡", "category": "가공식품", "storage": "냉동" }
+  { "name": "떡", "category": "가공식품", "storage": "냉동" },
+  { "name": "가지", "category":  "채소", "storage": "냉장" }
 ]
