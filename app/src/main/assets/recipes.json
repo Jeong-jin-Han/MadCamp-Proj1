@@ -1,0 +1,667 @@
+[
+  {
+    "name": "김치찌개",
+    "ingredients": [
+      "김치",
+      "삼겹살",
+      "두부",
+      "양파",
+      "대파",
+      "고춧가루",
+      "고추장",
+      "마늘",
+      "참치액젓"
+    ],
+    "image": "kimchi_jjigae"
+  },
+  {
+    "name": "된장찌개",
+    "ingredients": [
+      "된장",
+      "두부",
+      "애호박",
+      "감자",
+      "양파",
+      "대파",
+      "청양고추 / 일반고추",
+      "마늘",
+      "멸치육수코인"
+    ],
+    "image": "doenjang_jjigae"
+  },
+  {
+    "name": "순두부찌개",
+    "ingredients": [
+      "순두부",
+      "계란",
+      "고춧가루",
+      "대파",
+      "마늘",
+      "참기름",
+      "멸치육수코인"
+    ],
+    "image": "sundubu_jjigae"
+  },
+  {
+    "name": "감자조림",
+    "ingredients": [
+      "감자",
+      "양파",
+      "대파",
+      "간장",
+      "마늘",
+      "물엿"
+    ],
+    "image": "gamja_jorim"
+  },
+  {
+    "name": "계란장조림",
+    "ingredients": [
+      "계란",
+      "간장",
+      "대파",
+      "마늘",
+      "물엿"
+    ],
+    "image": "gyeran_jangjorim"
+  },
+  {
+    "name": "양배추참치덮밥",
+    "ingredients": [
+      "양배추",
+      "참치캔",
+      "밥",
+      "양파",
+      "대파",
+      "마요네즈",
+      "간장",
+      "굴소스"
+    ],
+    "image": "yangbaechu_tuna_bowl"
+  },
+  {
+    "name": "두부조림",
+    "ingredients": [
+      "두부",
+      "양파",
+      "대파",
+      "고춧가루",
+      "간장",
+      "마늘",
+      "참기름"
+    ],
+    "image": "dubu_jorim"
+  },
+  {
+    "name": "고추장불고기",
+    "ingredients": [
+      "삼겹살",
+      "양파",
+      "대파",
+      "고추장",
+      "고춧가루",
+      "간장",
+      "마늘",
+      "후추",
+      "참기름"
+    ],
+    "image": "gochujang_bulgogi"
+  },
+  {
+    "name": "고등어김치찜",
+    "ingredients": [
+      "고등어",
+      "김치",
+      "양파",
+      "대파",
+      "고춧가루",
+      "고추장",
+      "마늘"
+    ],
+    "image": "godeungeo_kimchi_jjim"
+  },
+  {
+    "name": "계란말이",
+    "ingredients": [
+      "계란",
+      "당근",
+      "대파"
+    ],
+    "image": "gyeran_mari"
+  },
+  {
+    "name": "김치전",
+    "ingredients": [
+      "김치",
+      "부침가루"
+    ],
+    "image": "kimchi_jeon"
+  },
+  {
+    "name": "두부김치",
+    "ingredients": [
+      "두부",
+      "김치",
+      "대파",
+      "마늘",
+      "참기름",
+      "고춧가루"
+    ],
+    "image": "dubu_kimchi"
+  },
+  {
+    "name": "떡볶이",
+    "ingredients": [
+      "떡",
+      "고추장",
+      "고춧가루",
+      "양파",
+      "대파",
+      "마늘",
+      "간장"
+    ],
+    "image": "tteokbokki"
+  },
+  {
+    "name": "만두전골",
+    "ingredients": [
+      "만두",
+      "팽이버섯",
+      "느타리버섯 / 양송이버섯",
+      "두부",
+      "대파",
+      "양파",
+      "마늘",
+      "간장",
+      "멸치육수코인"
+    ],
+    "image": "mandu_jeongol"
+  },
+  {
+    "name": "부추전",
+    "ingredients": [
+      "부추",
+      "부침가루"
+    ],
+    "image": "buchu_jeon"
+  },
+  {
+    "name": "비빔국수",
+    "ingredients": [
+      "소면",
+      "고추장",
+      "고춧가루",
+      "간장",
+      "식초",
+      "오이",
+      "계란",
+      "김",
+      "참기름"
+    ],
+    "image": "bibim_guksu"
+  },
+  {
+    "name": "잔치국수",
+    "ingredients": [
+      "소면",
+      "계란",
+      "애호박",
+      "당근",
+      "양파",
+      "대파",
+      "김",
+      "간장",
+      "마늘",
+      "멸치육수코인"
+    ],
+    "image": "janchi_guksu"
+  },
+  {
+    "name": "김치볶음밥",
+    "ingredients": [
+      "김치",
+      "밥",
+      "간장",
+      "양파",
+      "대파",
+      "마늘",
+      "참기름"
+    ],
+    "image": "kimchi_bokkeumbap"
+  },
+  {
+    "name": "김밥",
+    "ingredients": [
+      "밥",
+      "김",
+      "계란",
+      "당근",
+      "오이",
+      "소시지",
+      "참기름"
+    ],
+    "image": "kimbap"
+  },
+  {
+    "name": "참치쌈밥",
+    "ingredients": [
+      "참치캔",
+      "밥",
+      "상추",
+      "마요네즈",
+      "고추장"
+    ],
+    "image": "tuna_ssambap"
+  },
+  {
+    "name": "키토김밥",
+    "ingredients": [
+      "계란",
+      "김",
+      "참치캔",
+      "양배추",
+      "마요네즈"
+    ],
+    "image": "keto_kimbap"
+  },
+  {
+    "name": "비빔밥",
+    "ingredients": [
+      "밥",
+      "계란",
+      "당근",
+      "애호박",
+      "고추장",
+      "참기름"
+    ],
+    "image": "bibimbap"
+  },
+  {
+    "name": "콩국수",
+    "ingredients": [
+      "소면",
+      "두부",
+      "오이"
+    ],
+    "image": "kong_guksu"
+  },
+  {
+    "name": "소고기 샤브샤브",
+    "ingredients": [
+      "소고기",
+      "팽이버섯",
+      "느타리버섯 / 양송이버섯",
+      "양배추",
+      "대파",
+      "양파",
+      "마늘",
+      "간장",
+      "멸치육수코인"
+    ],
+    "image": "beef_shabu"
+  },
+  {
+    "name": "크림파스타",
+    "ingredients": [
+      "파스타면",
+      "우유",
+      "생크림",
+      "양파",
+      "마늘",
+      "버터",
+      "후추"
+    ],
+    "image": "cream_pasta"
+  },
+  {
+    "name": "토마토파스타",
+    "ingredients": [
+      "파스타면",
+      "토마토",
+      "양파",
+      "마늘",
+      "올리브오일",
+      "후추"
+    ],
+    "image": "tomato_pasta"
+  },
+  {
+    "name": "스팸마요덮밥",
+    "ingredients": [
+      "스팸",
+      "밥",
+      "계란",
+      "대파",
+      "마요네즈",
+      "간장"
+    ],
+    "image": "spam_mayo_bowl"
+  },
+  {
+    "name": "가지덮밥",
+    "ingredients": [
+      "가지",
+      "밥",
+      "양파",
+      "마늘",
+      "간장",
+      "고추장",
+      "참기름"
+    ],
+    "image": "gaji_bowl"
+  },
+  {
+    "name": "새우 오일파스타",
+    "ingredients": [
+      "파스타면",
+      "올리브오일",
+      "마늘",
+      "후추",
+      "청양고추 / 일반고추",
+      "새우"
+    ],
+    "image": "shrimp_oil_pasta"
+  },
+  {
+    "name": "베이컨크림리조또",
+    "ingredients": [
+      "밥",
+      "베이컨",
+      "생크림",
+      "우유",
+      "양파",
+      "마늘",
+      "버터",
+      "후추"
+    ],
+    "image": "bacon_cream_risotto"
+  },
+  {
+    "name": "치즈오믈렛",
+    "ingredients": [
+      "계란",
+      "치즈",
+      "우유",
+      "버터",
+      "후추"
+    ],
+    "image": "cheese_omelet"
+  },
+  {
+    "name": "감자그라탕",
+    "ingredients": [
+      "감자",
+      "우유",
+      "치즈",
+      "버터",
+      "후추",
+      "마늘"
+    ],
+    "image": "gamja_gratin"
+  },
+  {
+    "name": "버섯크림수프",
+    "ingredients": [
+      "느타리버섯 / 양송이버섯",
+      "우유",
+      "양파",
+      "버터",
+      "마늘",
+      "후추"
+    ],
+    "image": "mushroom_cream_soup"
+  },
+  {
+    "name": "가지조림",
+    "ingredients": [
+      "가지",
+      "양파",
+      "대파",
+      "마늘",
+      "간장",
+      "고춧가루",
+      "참기름"
+    ],
+    "image": "gaji_jorim"
+  },
+  {
+    "name": "토마토달걀볶음",
+    "ingredients": [
+      "토마토",
+      "계란",
+      "굴소스",
+      "후추"
+    ],
+    "image": "tomato_egg_stirfry"
+  },
+  {
+    "name": "오므라이스",
+    "ingredients": [
+      "밥",
+      "계란",
+      "양파",
+      "당근",
+      "닭가슴살",
+      "케첩",
+      "후추"
+    ],
+    "image": "omurice"
+  },
+  {
+    "name": "계란볶음밥",
+    "ingredients": [
+      "밥",
+      "계란",
+      "대파",
+      "간장",
+      "후추"
+    ],
+    "image": "gyeran_bokkeumbap"
+  },
+  {
+    "name": "마파두부",
+    "ingredients": [
+      "두부",
+      "양파",
+      "대파",
+      "마늘",
+      "고춧가루",
+      "고추장",
+      "간장",
+      "후추"
+    ],
+    "image": "mapo_tofu"
+  },
+  {
+    "name": "간장목살덮밥",
+    "ingredients": [
+      "목살",
+      "밥",
+      "양파",
+      "마늘",
+      "간장",
+      "후추",
+      "참기름"
+    ],
+    "image": "soy_pork_bowl"
+  },
+  {
+    "name": "새우볶음밥",
+    "ingredients": [
+      "새우",
+      "밥",
+      "계란",
+      "양파",
+      "대파",
+      "마늘",
+      "간장",
+      "후추"
+    ],
+    "image": "shrimp_bokkeumbap"
+  },
+  {
+    "name": "닭가슴살샐러드",
+    "ingredients": [
+      "닭가슴살",
+      "양배추",
+      "파프리카",
+      "오이",
+      "마요네즈",
+      "후추"
+    ],
+    "image": "chicken_salad"
+  },
+  {
+    "name": "감자샐러드",
+    "ingredients": [
+      "감자",
+      "계란",
+      "당근",
+      "오이",
+      "마요네즈",
+      "후추"
+    ],
+    "image": "gamja_salad"
+  },
+  {
+    "name": "연어샐러드",
+    "ingredients": [
+      "연어",
+      "양배추",
+      "오이",
+      "파프리카",
+      "마요네즈",
+      "후추"
+    ],
+    "image": "salmon_salad"
+  },
+  {
+    "name": "프렌치토스트",
+    "ingredients": [
+      "빵",
+      "계란",
+      "우유",
+      "버터"
+    ],
+    "image": "french_toast"
+  },
+  {
+    "name": "오이소박이",
+    "ingredients": [
+      "오이",
+      "당근",
+      "쪽파",
+      "마늘",
+      "고춧가루",
+      "식초"
+    ],
+    "image": "oi_sobagi"
+  },
+  {
+    "name": "수육",
+    "ingredients": [
+      "삼겹살",
+      "대파",
+      "마늘",
+      "된장",
+      "후추"
+    ],
+    "image": "suyuk"
+  },
+  {
+    "name": "양배추 겉절이",
+    "ingredients": [
+      "고춧가루",
+      "마늘",
+      "쪽파",
+      "참기름",
+      "식초",
+      "양배추"
+    ],
+    "image": "yangbaechu_geotjeori"
+  },
+  {
+    "name": "소고기 뭇국",
+    "ingredients": [
+      "소고기",
+      "대파",
+      "마늘",
+      "간장"
+    ],
+    "image": "beef_radish_soup"
+  },
+  {
+    "name": "스테이크",
+    "ingredients": [
+      "소고기",
+      "후추",
+      "버터",
+      "마늘",
+      "올리브오일"
+    ],
+    "image": "steak"
+  },
+  {
+    "name": "닭복음탕",
+    "ingredients": [
+      "닭다리살",
+      "감자",
+      "당근",
+      "양파",
+      "대파",
+      "고추장",
+      "고춧가루",
+      "마늘",
+      "간장",
+      "후추"
+    ],
+    "image": "dakbokkeumtang"
+  },
+  {
+    "name": "닭갈비",
+    "ingredients": [
+      "닭다리살",
+      "양배추",
+      "양파",
+      "당근",
+      "고추장",
+      "고춧가루",
+      "마늘",
+      "간장",
+      "후추"
+    ],
+    "image": "dakgalbi"
+  },
+  {
+    "name": "가지튀김",
+    "ingredients": [
+      "가지",
+      "부침가루"
+    ],
+    "image": "gaji_fry"
+  },
+  {
+    "name": "간장비빔국수",
+    "ingredients": [
+      "소면",
+      "간장",
+      "참기름",
+      "오이",
+      "계란"
+    ],
+    "image": "soy_bibim_guksu"
+  },
+  {
+    "name": "만두국",
+    "ingredients": [
+      "만두",
+      "계란",
+      "대파",
+      "김",
+      "간장",
+      "멸치육수코인",
+      "마늘"
+    ],
+    "image": "mandu_guk"
+  }
+]

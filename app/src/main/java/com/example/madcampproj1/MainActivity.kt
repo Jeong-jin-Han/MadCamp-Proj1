@@ -56,53 +56,53 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MadCampProj1Theme {
-        Greeting("Android")
-    }
-}
-
-data class Message(val auth: String, val body: String)
-
-// Column, Row, Box 를 사용할 수 있음
-@Composable
-fun MessageCard(mSg: Message) {
-    Row {
-        Image(
-            painter = painterResource(id=R.drawable.image1),
-            contentDescription = "profile image",
-            modifier = Modifier
-                .size(120.dp),  // 가로, 세로 모두 120dp로 설정
-            contentScale = ContentScale.Fit,  // 잘리지 않고 맞게 축소됨
-        )
-
-        // image 와 작성자 정보 사이에 공란 추가
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Column {
-            Text(text = mSg.auth)
-            Text(text = mSg.body)
-        }
-    }
-
-}
-
-@Preview
-@Composable
-fun PreviewMessageCard() {
-    MessageCard(mSg = Message("someone", "My First Jetpack Compose"))
-}
+//
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier
+//    )
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    MadCampProj1Theme {
+//        Greeting("Android")
+//    }
+//}
+//
+//data class Message(val auth: String, val body: String)
+//
+//// Column, Row, Box 를 사용할 수 있음
+//@Composable
+//fun MessageCard(mSg: Message) {
+//    Row {
+//        Image(
+//            painter = painterResource(id=R.drawable.image1),
+//            contentDescription = "profile image",
+//            modifier = Modifier
+//                .size(120.dp),  // 가로, 세로 모두 120dp로 설정
+//            contentScale = ContentScale.Fit,  // 잘리지 않고 맞게 축소됨
+//        )
+//
+//        // image 와 작성자 정보 사이에 공란 추가
+//        Spacer(modifier = Modifier.width(8.dp))
+//
+//        Column {
+//            Text(text = mSg.auth)
+//            Text(text = mSg.body)
+//        }
+//    }
+//
+//}
+//
+//@Preview
+//@Composable
+//fun PreviewMessageCard() {
+//    MessageCard(mSg = Message("someone", "My First Jetpack Compose"))
+//}
 
 ////@OptIn(ExperimentalFoundationApi::class)
 //@Composable
@@ -297,6 +297,8 @@ fun PreviewMessageCard() {
 //    }
 //}
 
+
+
 @Composable
 fun MainTabs(innerPadding: PaddingValues) {
     val tabs = listOf("리스트", "갤러리", "자유")
@@ -306,6 +308,7 @@ fun MainTabs(innerPadding: PaddingValues) {
     // ✅ 공통 상태
     val selectedIngredients = remember { mutableStateOf(setOf<String>()) }
     val ingredientsState = remember { mutableStateOf<List<Ingredient>>(emptyList()) }
+    val isLoaded = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -332,9 +335,10 @@ fun MainTabs(innerPadding: PaddingValues) {
             when (selectedTabIndex) {
                 0 -> ListTabContent(
                     selectedIngredients = selectedIngredients,
-                    ingredientsState = ingredientsState
+                    ingredientsState = ingredientsState,
+                    isLoaded = isLoaded
                 )
-                1 -> GalleryTabContent()
+                1 -> GalleryTabContent(selectedIngredients = selectedIngredients.value)
                 2 -> FreeTabContent()
             }
         }

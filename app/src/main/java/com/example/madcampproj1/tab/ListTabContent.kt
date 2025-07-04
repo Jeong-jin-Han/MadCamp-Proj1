@@ -242,14 +242,24 @@ data class Ingredient(
 @Composable
 fun ListTabContent(
     selectedIngredients: MutableState<Set<String>>,
-    ingredientsState: MutableState<List<Ingredient>>
+    ingredientsState: MutableState<List<Ingredient>>,
+    isLoaded: MutableState<Boolean>
 ) {
     val context = LocalContext.current
 
-    // 초기 1회만 JSON에서 로드
+//    // 초기 1회만 JSON에서 로드
+//    LaunchedEffect(Unit) {
+//        val loaded = loadIngredientsFromAssets(context)
+//        ingredientsState.value = loaded
+//    }
+//    val isLoaded = remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
-        val loaded = loadIngredientsFromAssets(context)
-        ingredientsState.value = loaded
+        if (!isLoaded.value) {
+            val loaded = loadIngredientsFromAssets(context)
+            ingredientsState.value = loaded
+            isLoaded.value = true
+        }
     }
 
     val ingredients = ingredientsState.value

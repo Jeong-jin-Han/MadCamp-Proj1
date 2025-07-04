@@ -19,8 +19,8 @@
   { "name": "느타리버섯 / 양송이버섯", "category": "채소", "storage": "냉장" },
   { "name": "삼겹살", "category": "육류", "storage": "냉동" },
   { "name": "목살", "category": "육류", "storage": "냉동" },
-  { "name": "대패삼겹 OR 대패 목살", "category": "육류", "storage": "냉동" },
-  { "name": "고등어", "category": "생선", "storage": "냉동" },
+  { "name": "대패삼겹 / 대패 목살", "category": "육류", "storage": "냉동" },
+  { "name": "고등어", "category": "해산물", "storage": "냉동" },
   { "name": "순두부", "category": "가공식품", "storage": "냉장" },
   { "name": "고춧가루", "category": "조미료", "storage": "냉동" },
   { "name": "고추장", "category": "장류", "storage": "냉장" },
@@ -60,5 +60,7 @@
   { "name": "부추", "category": "채소", "storage": "냉장" },
   { "name": "만두", "category": "가공식품", "storage": "냉동" },
   { "name": "떡", "category": "가공식품", "storage": "냉동" },
-  { "name": "가지", "category":  "채소", "storage": "냉장" }
+  { "name": "가지", "category":  "채소", "storage": "냉장" },
+  { "name": "닭다리살", "category":  "육류", "storage": "냉동" },
+  { "name": "부침가루", "category":  "가공식품", "storage": "실온" }
 ]
