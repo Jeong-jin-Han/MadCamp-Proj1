@@ -434,7 +434,9 @@ data class Ingredient(
 fun FridgePopup(selectedIngredients: Set<String>, ingredients: List<Ingredient>) {
     val fridgeItems = ingredients.filter { it.name in selectedIngredients && it.storage == "냉장" }
     val freezerItems = ingredients.filter { it.name in selectedIngredients && it.storage == "냉동" }
+    val roomItems = ingredients.filter { it.name in selectedIngredients && it.storage == "실온" }
 
+    
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -453,6 +455,15 @@ fun FridgePopup(selectedIngredients: Set<String>, ingredients: List<Ingredient>)
         Text("냉동", style = MaterialTheme.typography.titleMedium)
         LazyRow {
             items(freezerItems) { item ->
+                TextBox(item.name)
+            }
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        Text("실온", style = MaterialTheme.typography.titleMedium)
+        LazyRow {
+            items(roomItems) { item ->
                 TextBox(item.name)
             }
         }

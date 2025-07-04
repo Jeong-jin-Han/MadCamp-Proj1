@@ -52,7 +52,6 @@
   { "name": "마요네즈", "category": "조미료", "storage": "냉장" },
   { "name": "맛술", "category": "조미료", "storage": "실온" },
   { "name": "물엿", "category": "조미료", "storage": "실온" },
-  { "name": "버터", "category": "조미료", "storage": "냉장" },
   { "name": "식초", "category": "조미료", "storage": "실온" },
   { "name": "참기름", "category": "조미료", "storage": "실온" },
   { "name": "참치액젓", "category": "조미료", "storage": "실온" },
