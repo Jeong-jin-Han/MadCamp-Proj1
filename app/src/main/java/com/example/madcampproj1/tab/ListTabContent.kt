@@ -551,14 +551,14 @@ fun IngredientInputDialog(
                 Text("취소")
             }
         },
-        title = { Text(text = "유통기한 설정") },
+        title = { Text(text = "식재료 추가") },
         text = {
             Column {
                 Text("재료: $ingredientName")
                 Spacer(Modifier.height(8.dp))
 
                 Text(
-                    text = if (selectedDate.isEmpty()) "날짜를 선택하세요" else "선택된 날짜: $selectedDate",
+                    text = if (selectedDate.isEmpty()) "날짜를 선택하세요" else "유통기한: $selectedDate",
                     modifier = Modifier
                         .clickable { datePickerDialog.show() }
                         .padding(8.dp)
