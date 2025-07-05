@@ -369,24 +369,42 @@ fun FridgePopup(
     val freezerItems = ingredientsState.value.filter { it.name in selectedIngredients.value && it.storage == "냉동" }
     val roomItems = ingredientsState.value.filter { it.name in selectedIngredients.value && it.storage == "실온" }
 
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xFFE0F7FA))
             .padding(16.dp)
-    ) {//냉장
+    ) {
+        // 냉장
         Text("냉장", style = MaterialTheme.typography.titleMedium)
         LazyRow {
             items(fridgeItems) { item ->
-                TextBox(text = item.name, onDoubleClick = {
-                    removeIngredientByName(item.name, selectedIngredients, ingredientsState)
-                })
+                TextBox(
+                    text = item.name,
+                    count = item.count,
+                    onDecrease = {
+                        if (item.count <= 1) {
+                            removeIngredientByName(item.name, selectedIngredients, ingredientsState)
+                        } else {
+                            val updatedList = ingredientsState.value.map {
+                                if (it.name == item.name) it.copy(count = it.count - 1) else it
+                            }
+                            ingredientsState.value = updatedList
+                        }
+                    },
+                    onIncrease = {
+                        val updatedList = ingredientsState.value.map {
+                            if (it.name == item.name) it.copy(count = it.count + 1) else it
+                        }
+                        ingredientsState.value = updatedList
+                    }
+                )
             }
         }
 
         Spacer(Modifier.height(12.dp))
-        //냉동 + 실온
+
+        // 냉동 + 실온
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -395,45 +413,101 @@ fun FridgePopup(
                 Text("냉동", style = MaterialTheme.typography.titleMedium)
                 LazyRow {
                     items(freezerItems) { item ->
-                        TextBox(text = item.name, onDoubleClick = {
-                            removeIngredientByName(item.name, selectedIngredients, ingredientsState)
-                        })
+                        TextBox(
+                            text = item.name,
+                            count = item.count,
+                            onDecrease = {
+                                if (item.count <= 1) {
+                                    removeIngredientByName(item.name, selectedIngredients, ingredientsState)
+                                } else {
+                                    val updatedList = ingredientsState.value.map {
+                                        if (it.name == item.name) it.copy(count = it.count - 1) else it
+                                    }
+                                    ingredientsState.value = updatedList
+                                }
+                            },
+                            onIncrease = {
+                                val updatedList = ingredientsState.value.map {
+                                    if (it.name == item.name) it.copy(count = it.count + 1) else it
+                                }
+                                ingredientsState.value = updatedList
+                            }
+                        )
                     }
                 }
             }
+
             Column(modifier = Modifier.weight(1f)) {
                 Text("실온", style = MaterialTheme.typography.titleMedium)
                 LazyRow {
                     items(roomItems) { item ->
-                        TextBox(text = item.name, onDoubleClick = {
-                            removeIngredientByName(item.name, selectedIngredients, ingredientsState)
-                        })
+                        TextBox(
+                            text = item.name,
+                            count = item.count,
+                            onDecrease = {
+                                if (item.count <= 1) {
+                                    removeIngredientByName(item.name, selectedIngredients, ingredientsState)
+                                } else {
+                                    val updatedList = ingredientsState.value.map {
+                                        if (it.name == item.name) it.copy(count = it.count - 1) else it
+                                    }
+                                    ingredientsState.value = updatedList
+                                }
+                            },
+                            onIncrease = {
+                                val updatedList = ingredientsState.value.map {
+                                    if (it.name == item.name) it.copy(count = it.count + 1) else it
+                                }
+                                ingredientsState.value = updatedList
+                            }
+                        )
                     }
                 }
             }
         }
     }
 }
-    @Composable
-    fun TextBox(text: String, onDoubleClick: () -> Unit) {
-        var lastClickTime by remember { mutableStateOf(0L) }
-        Box(
-            modifier = Modifier
-                .padding(8.dp)
-                .background(Color.White)
-                .border(1.dp, Color.Gray)
-                .clickable {
-                    val currentTime = System.currentTimeMillis()
-                    if (currentTime - lastClickTime < 300) {
-                        onDoubleClick()
-                    }
-                    lastClickTime = currentTime
-                }
-                .padding(8.dp)
-        ) {
+
+@Composable
+fun TextBox(
+    text: String,
+    count: Int,
+    onDecrease: () -> Unit,
+    onIncrease: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .padding(8.dp)
+            .padding(8.dp) // border 제거
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text)
+
+            Spacer(Modifier.height(4.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "-",
+                    modifier = Modifier
+                        .clickable { onDecrease() }
+                        .padding(horizontal = 8.dp),
+                    color = Color.Red
+                )
+                Text("$count", modifier = Modifier.padding(horizontal = 8.dp))
+                Text(
+                    text = "+",
+                    modifier = Modifier
+                        .clickable { onIncrease() }
+                        .padding(horizontal = 8.dp),
+                    color = Color.Blue
+                )
+            }
         }
     }
+}
 
     fun removeIngredientByName(
         name: String,
