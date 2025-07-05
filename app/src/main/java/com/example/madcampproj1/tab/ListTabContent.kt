@@ -385,20 +385,42 @@ fun ListTabContent(
         ) { page ->
             val group = groupTitles[page]
             val subcategories = categoryGroups[group] ?: emptyList()
-            val filteredIngredients = ingredients.filter { it.category in subcategories }
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(filteredIngredients) { index, item ->
-                    IngredientRow(
-                        item = item,
-                        onCheckedChange = {
-                            currentIngredientIndex = ingredients.indexOfFirst { it.name == item.name }
-                            showDialog = true
-                        }
-                    )
+            // ✅ 검색어 상태 추가 (각 페이지 별로)
+            var searchQuery by remember { mutableStateOf("") }
+
+            // ✅ 검색어로 필터링
+            val filteredIngredients = ingredients.filter {
+                it.category in subcategories && it.name.startsWith(searchQuery)
+            }
+
+            Column(modifier = Modifier.fillMaxSize()) {
+
+                // ✅ 여기에 검색창 추가
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("식재료 검색") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+
+                // ✅ 필터링된 재료 목록
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    itemsIndexed(filteredIngredients) { index, item ->
+                        IngredientRow(
+                            item = item,
+                            onCheckedChange = {
+                                currentIngredientIndex = ingredients.indexOfFirst { it.name == item.name }
+                                showDialog = true
+                            }
+                        )
+                    }
                 }
             }
         }
+
 
         if (showDialog && currentIngredientIndex >= 0) {
             val selectedItem = ingredients[currentIngredientIndex]
