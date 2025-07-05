@@ -202,8 +202,6 @@
 //    }
 //}
 //
-
-
 package com.example.madcampproj1
 
 
@@ -270,7 +268,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainTabs(innerPadding: PaddingValues) {
-    val tabs = listOf("리스트", "갤러리", "자유")
+    val tabs = listOf("식재료", "추천 요리", "커뮤니티")
     var selectedTabIndex by remember { mutableStateOf(0) }
     var isPopupVisible by remember { mutableStateOf(false) }
 
@@ -297,10 +295,10 @@ fun MainTabs(innerPadding: PaddingValues) {
 //                selectedIngredients = selectedIngredients.value,
 //                ingredients = ingredientsState.value
 //            )
-        FridgePopup(
-            selectedIngredients = selectedIngredients,        // ✅ 전체 MutableState 넘김
-            ingredientsState = ingredientsState
-        )
+            FridgePopup(
+                selectedIngredients = selectedIngredients,        // ✅ 전체 MutableState 넘김
+                ingredientsState = ingredientsState
+            )
         }
 
         // ✅ 콘텐츠 영역 (탭에 따라)
@@ -377,7 +375,7 @@ fun FridgePopup(
             .fillMaxWidth()
             .background(Color(0xFFE0F7FA))
             .padding(16.dp)
-    ) {
+    ) {//냉장
         Text("냉장", style = MaterialTheme.typography.titleMedium)
         LazyRow {
             items(fridgeItems) { item ->
@@ -388,63 +386,69 @@ fun FridgePopup(
         }
 
         Spacer(Modifier.height(12.dp))
-
-        Text("냉동", style = MaterialTheme.typography.titleMedium)
-        LazyRow {
-            items(freezerItems) { item ->
-                TextBox(text = item.name, onDoubleClick = {
-                    removeIngredientByName(item.name, selectedIngredients, ingredientsState)
-                })
-            }
-        }
-
-        Spacer(Modifier.height(12.dp))
-
-        Text("실온", style = MaterialTheme.typography.titleMedium)
-        LazyRow {
-            items(roomItems) { item ->
-                TextBox(text = item.name, onDoubleClick = {
-                    removeIngredientByName(item.name, selectedIngredients, ingredientsState)
-                })
-            }
-        }
-    }
-}
-
-@Composable
-fun TextBox(text: String, onDoubleClick: () -> Unit) {
-    var lastClickTime by remember { mutableStateOf(0L) }
-    Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .background(Color.White)
-            .border(1.dp, Color.Gray)
-            .clickable {
-                val currentTime = System.currentTimeMillis()
-                if (currentTime - lastClickTime < 300) {
-                    onDoubleClick()
+        //냉동 + 실온
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text("냉동", style = MaterialTheme.typography.titleMedium)
+                LazyRow {
+                    items(freezerItems) { item ->
+                        TextBox(text = item.name, onDoubleClick = {
+                            removeIngredientByName(item.name, selectedIngredients, ingredientsState)
+                        })
+                    }
                 }
-                lastClickTime = currentTime
             }
-            .padding(8.dp)
+            Column(modifier = Modifier.weight(1f)) {
+                Text("실온", style = MaterialTheme.typography.titleMedium)
+                LazyRow {
+                    items(roomItems) { item ->
+                        TextBox(text = item.name, onDoubleClick = {
+                            removeIngredientByName(item.name, selectedIngredients, ingredientsState)
+                        })
+                    }
+                }
+            }
+        }
+    }
+}
+    @Composable
+    fun TextBox(text: String, onDoubleClick: () -> Unit) {
+        var lastClickTime by remember { mutableStateOf(0L) }
+        Box(
+            modifier = Modifier
+                .padding(8.dp)
+                .background(Color.White)
+                .border(1.dp, Color.Gray)
+                .clickable {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastClickTime < 300) {
+                        onDoubleClick()
+                    }
+                    lastClickTime = currentTime
+                }
+                .padding(8.dp)
+        ) {
+            Text(text)
+        }
+    }
+
+    fun removeIngredientByName(
+        name: String,
+        selectedIngredients: MutableState<Set<String>>,
+        ingredientsState: MutableState<List<Ingredient>>
     ) {
-        Text(text)
-    }
-}
+        // ✅ 강제 업데이트 되도록 새 Set 생성
+        selectedIngredients.value = selectedIngredients.value.toMutableSet().apply {
+            remove(name)
+        }.toSet()
 
-fun removeIngredientByName(
-    name: String,
-    selectedIngredients: MutableState<Set<String>>,
-    ingredientsState: MutableState<List<Ingredient>>
-) {
-    // ✅ 강제 업데이트 되도록 새 Set 생성
-    selectedIngredients.value = selectedIngredients.value.toMutableSet().apply {
-        remove(name)
-    }.toSet()
-
-    val updated = ingredientsState.value.map {
-        if (it.name == name) it.copy(isChecked = false, expiry = null, count = 1)
-        else it
+        val updated = ingredientsState.value.map {
+            if (it.name == name) it.copy(isChecked = false, expiry = null, count = 1)
+            else it
+        }
+        ingredientsState.value = updated
     }
-    ingredientsState.value = updated
-}
+
