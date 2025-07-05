@@ -376,7 +376,7 @@ fun FridgePopup(
             .padding(16.dp)
     ) {
         // 냉장
-        Text("냉장", style = MaterialTheme.typography.titleMedium)
+        Text("냉장", style = MaterialTheme.typography.titleLarge)
         LazyRow {
             items(fridgeItems) { item ->
                 TextBox(
@@ -410,7 +410,7 @@ fun FridgePopup(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("냉동", style = MaterialTheme.typography.titleMedium)
+                Text("냉동", style = MaterialTheme.typography.titleLarge)
                 LazyRow {
                     items(freezerItems) { item ->
                         TextBox(
@@ -438,7 +438,7 @@ fun FridgePopup(
             }
 
             Column(modifier = Modifier.weight(1f)) {
-                Text("실온", style = MaterialTheme.typography.titleMedium)
+                Text("실온", style = MaterialTheme.typography.titleLarge)
                 LazyRow {
                     items(roomItems) { item ->
                         TextBox(
