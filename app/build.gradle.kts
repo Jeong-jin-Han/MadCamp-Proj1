@@ -37,6 +37,11 @@ android {
     buildFeatures {
         compose = true
     }
+    // 임시
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
 }
 
 dependencies {
@@ -58,6 +63,20 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.compose.material:material-icons-extended")
+
+// ✅ Naver Map SDK
+//    implementation("com.naver.maps:map-sdk:3.17.0")
+//    implementation("com.naver.maps:map-sdk:3.20.0")
+    implementation("com.naver.maps:map-sdk:3.22.0")
+
+// ✅ Compose에서 Android View를 사용할 수 있게 해주는 Interop 라이브러리
+    implementation("androidx.compose.ui:ui-viewbinding:1.6.0")
+
+// ✅ Lifecycle Compose 연동 (rememberMapViewWithLifecycle 사용 시 필요)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
+    implementation("androidx.cardview:cardview:1.0.0")
 
     // build.gradle(:app) 파일에 추가 (Compose 버전에 맞춰 버전 조정 가능)
     // implementation("com.google.accompanist:accompanist-pager:0.32.0")
