@@ -25,8 +25,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,16 +52,6 @@ import com.example.madcampproj1.sampledata.MemberData
 import com.example.madcampproj1.sampledata.MemberDto
 import com.example.madcampproj1.sampledata.CVData
 
-//@Composable
-//fun FreeTabContent() {
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ) {
-//        Text("자유 주제 탭입니다")
-//    }
-//}
-
 @Composable
 fun FreeTabContent() {
     val context = LocalContext.current
@@ -80,7 +73,7 @@ fun FreeTabContent() {
                     map = naverMap
                     setOnClickListener {
                         context.startActivity(Intent(Intent.ACTION_DIAL).apply {
-                            data = Uri.parse("tel:${member.phone}")
+                            data = Uri.parse("tel:${member.imgColor}")
                         })
                         true
                     }
@@ -96,6 +89,24 @@ fun FreeTabContent() {
     }
 }
 
+//fun createCustomMarkerView(context: Context, member: MemberDto): View {
+//    val view = LayoutInflater.from(context).inflate(R.layout.map_pin, null)
+//    val imageView: ImageView = view.findViewById(R.id.phone_component_image)
+//    val nameText: TextView = view.findViewById(R.id.phone_component_name)
+//    val statusText: TextView = view.findViewById(R.id.phone_component_status)
+//    val cardView: CardView = view.findViewById(R.id.phone)
+//
+//    val cv = CVData.getCVDataList().find { it.memberId == member.memberId }
+//    cv?.let {
+//        imageView.setImageResource(member.imgCirclePath)
+//        imageView.setBackgroundResource(R.drawable.circle)
+//        cardView.radius = 50f
+//        nameText.text = member.name
+//        statusText.text = it.qualification
+//    }
+//    return view
+//}
+
 fun createCustomMarkerView(context: Context, member: MemberDto): View {
     val view = LayoutInflater.from(context).inflate(R.layout.map_pin, null)
     val imageView: ImageView = view.findViewById(R.id.phone_component_image)
@@ -103,16 +114,38 @@ fun createCustomMarkerView(context: Context, member: MemberDto): View {
     val statusText: TextView = view.findViewById(R.id.phone_component_status)
     val cardView: CardView = view.findViewById(R.id.phone)
 
+    // CVData에서 멤버 정보를 가져오기
     val cv = CVData.getCVDataList().find { it.memberId == member.memberId }
     cv?.let {
-        imageView.setImageResource(member.imgCirclePath)
-        imageView.setBackgroundResource(R.drawable.circle)
-        cardView.radius = 50f
+        // 원형 아이콘 이미지 설정
+        imageView.setImageResource(member.imgCirclePath) // 기본 원형 이미지 설정
+        imageView.setBackgroundResource(R.drawable.circle) // 원형 배경 설정
+        cardView.radius = 50f // 카드뷰의 반지름 설정
+
+        // 이름과 상태 텍스트 설정
         nameText.text = member.name
         statusText.text = it.qualification
+
+        // 이미지 색상 동적으로 변경
+        val color = member.imgColor  // 예를 들어 member.imgColor는 "#FF5733" 형식입니다.
+        updateIconColorUsingColorFilter(imageView, color)  // 동적으로 색상 변경
     }
     return view
 }
+
+fun updateIconColorUsingColorFilter(imageView: ImageView, color: String) {
+    // 색상 파싱 (잘못된 색상 입력을 처리)
+    val parsedColor = try {
+        Color.parseColor(color) // "#RRGGBB" 형식의 색상 문자열을 Color 객체로 변환
+    } catch (e: IllegalArgumentException) {
+        Color.GRAY // 잘못된 색상 값일 경우 기본 색상
+    }
+
+    // ColorFilter를 사용하여 색상 변경
+    imageView.setColorFilter(parsedColor) // ImageView에 색상 필터 적용
+}
+
+
 
 fun createBitmapFromView(view: View): Bitmap {
     view.measure(
@@ -125,6 +158,7 @@ fun createBitmapFromView(view: View): Bitmap {
     view.draw(canvas)
     return bitmap
 }
+
 
 @Composable
 fun rememberMapViewWithLifecycle(): MapView {

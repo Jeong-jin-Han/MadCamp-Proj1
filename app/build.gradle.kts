@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -77,7 +80,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
     implementation("androidx.cardview:cardview:1.0.0")
-
+    implementation("androidx.appcompat:appcompat:1.6.1")
     // build.gradle(:app) 파일에 추가 (Compose 버전에 맞춰 버전 조정 가능)
     // implementation("com.google.accompanist:accompanist-pager:0.32.0")
 //    implementation("com.google.accompanist:accompanist-pager:0.27.1")
