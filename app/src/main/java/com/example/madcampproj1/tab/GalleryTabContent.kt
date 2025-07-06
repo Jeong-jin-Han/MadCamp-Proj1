@@ -34,6 +34,7 @@ import androidx.compose.foundation.background
 
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -45,6 +46,8 @@ import androidx.compose.ui.layout.ContentScale
 import com.example.madcampproj1.model.Recipe
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import android.net.Uri
+
 //@Suppress("DiscouragedApi")
 //@Composable
 //fun GalleryTabContent() {
@@ -230,7 +233,7 @@ fun GalleryTabContent(
 
                     Spacer(Modifier.height(8.dp))
 
-                    val missingIngredients = recipe.ingredients.filter { it !in selectedIngredients }
+
                     @OptIn(ExperimentalLayoutApi::class)
                     FlowRow {
                         recipe.ingredients.forEach { ingredient ->
@@ -239,7 +242,14 @@ fun GalleryTabContent(
                                 text = ingredient,
                                 color = color,
                                 style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(4.dp) // 약간의 간격 주고 싶으면 여기서 설정
+                                modifier = Modifier
+                                    .padding(4.dp)
+                                    .clickable(enabled = ingredient !in selectedIngredients) {
+                                        val encodedIngredient = Uri.encode(ingredient)
+                                        val url = "https://www.coupang.com/np/search?q=$encodedIngredient"
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                        context.startActivity(intent)
+                                    }
                             )
                         }
                     }
