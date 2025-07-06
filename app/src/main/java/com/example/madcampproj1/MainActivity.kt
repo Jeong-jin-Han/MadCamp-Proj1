@@ -241,7 +241,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Kitchen
 
-import com.example.madcampproj1.tab.Ingredient
+import com.example.madcampproj1.model.Ingredient
 
 import androidx.compose.foundation.clickable
 
@@ -264,8 +264,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun MainTabs(innerPadding: PaddingValues) {
     val tabs = listOf("식재료", "추천 요리", "커뮤니티")

@@ -1,5 +1,6 @@
 package com.example.madcampproj1.tab
 //import androidx.compose.foundation.layout.Box
+
 import androidx.compose.foundation.layout.fillMaxSize
 //import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,12 +30,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.background
 
 
 import android.content.Context
+import androidx.compose.foundation.ExperimentalFoundationApi
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.example.madcampproj1.model.RecipeWithSteps
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.FlowRow
 
+import androidx.compose.ui.layout.ContentScale
+import com.example.madcampproj1.model.Recipe
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 //@Suppress("DiscouragedApi")
 //@Composable
 //fun GalleryTabContent() {
@@ -117,14 +127,9 @@ import com.google.gson.reflect.TypeToken
 //    }
 //}
 
-data class Recipe(
-    val name: String,
-    val image: String,
-    val ingredients: List<String>
-)
 
 fun loadRecipesFromAssets(context: Context): List<Recipe> {
-    val jsonString = context.assets.open("recipes.json")
+    val jsonString = context.assets.open("recipes_with_steps.json")
         .bufferedReader()
         .use { it.readText() }
 
@@ -134,6 +139,7 @@ fun loadRecipesFromAssets(context: Context): List<Recipe> {
 }
 
 @Suppress("DiscouragedApi")
+@ExperimentalFoundationApi
 @Composable
 fun GalleryTabContent(
     selectedIngredients: Set<String>
@@ -141,12 +147,13 @@ fun GalleryTabContent(
     val context = LocalContext.current
 
     // 🔁 전체 레시피 로드 (처음 1회)
-    val allRecipes = remember {
-        mutableStateOf<List<Recipe>>(emptyList())
-    }
+    val allRecipes = remember { mutableStateOf<List<RecipeWithSteps>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        allRecipes.value = loadRecipesFromAssets(context)
+        val jsonString = context.assets.open("recipes_with_steps.json").bufferedReader().use { it.readText() }
+        val gson = Gson()
+        val listType = object : TypeToken<List<RecipeWithSteps>>() {}.type
+        allRecipes.value = gson.fromJson(jsonString, listType)
     }
 
 //    // 🔍 추천 레시피 정렬 (재료 차이 적은 순)
@@ -179,8 +186,7 @@ fun GalleryTabContent(
                 Triple(recipe, matchedCount, missingCount)
             }
             .sortedWith(
-                compareByDescending<Triple<Recipe, Int, Int>> { it.second }  // matchedCount ↓
-                    .thenBy { it.third }                                      // missingCount ↑
+                compareByDescending<Triple<RecipeWithSteps, Int, Int>> { it.second }.thenBy { it.third }                                     // missingCount ↑
             )
             .map { it.first }
             .take(21)
@@ -194,60 +200,98 @@ fun GalleryTabContent(
     }
 
     // 전체화면 보기용 상태
-    var selectedImageIndex by remember { mutableStateOf<Int?>(null) }
+    var selectedIndex by remember { mutableStateOf<Int?>(null) }
 
-    if (selectedImageIndex != null) {
-        val pagerState = rememberPagerState(pageCount = { imageIds.size })
+    if (selectedIndex != null) {
+        val pagerState = rememberPagerState(pageCount = { recommendedRecipes.size })
 
-        LaunchedEffect(selectedImageIndex) {
-            pagerState.scrollToPage(selectedImageIndex!!)
+        LaunchedEffect(selectedIndex) {
+            pagerState.scrollToPage(selectedIndex!!)
         }
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable { selectedImageIndex = null },
-            contentAlignment = Alignment.Center
+                .background(Color.White)
+                .clickable { selectedIndex = null }
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier.fillMaxWidth()
-                ) { page ->
+            HorizontalPager(state = pagerState) { page ->
+                val recipe = recommendedRecipes[page]
+                val resId = context.resources.getIdentifier(recipe.image, "drawable", context.packageName)
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(recipe.name, style = MaterialTheme.typography.titleLarge)
+
+                    Spacer(Modifier.height(8.dp))
+
+                    val missingIngredients = recipe.ingredients.filter { it !in selectedIngredients }
+                    @OptIn(ExperimentalLayoutApi::class)
+                    FlowRow {
+                        recipe.ingredients.forEach { ingredient ->
+                            val color = if (ingredient in selectedIngredients) Color.Black else Color.Red
+                            Text(
+                                text = ingredient,
+                                color = color,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(4.dp) // 약간의 간격 주고 싶으면 여기서 설정
+                            )
+                        }
+                    }
+
+
+
+
+                    Spacer(Modifier.height(8.dp))
+
                     Image(
-                        painter = painterResource(id = imageIds[page]),
-                        contentDescription = recommendedRecipes[page].name,
+                        painter = painterResource(id = resId),
+                        contentDescription = recipe.name,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .aspectRatio(1f)
+                            .aspectRatio(1f),
+                        contentScale = ContentScale.Crop
                     )
-                }
 
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = recommendedRecipes[pagerState.currentPage].name,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                    Spacer(Modifier.height(10.dp))
+                    Text(
+                        text = "레시피",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+
+                    Spacer(Modifier.height(10.dp))
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        recipe.steps.forEach { step ->
+                            Text(text = step, style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
+                }
             }
         }
     } else {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
+            modifier = Modifier.fillMaxSize().padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
-            itemsIndexed(imageIds) { index, resId ->
+            itemsIndexed(recommendedRecipes) { index, recipe ->
+                val resId = context.resources.getIdentifier(recipe.image, "drawable", context.packageName)
                 Image(
                     painter = painterResource(id = resId),
-                    contentDescription = recommendedRecipes[index].name,
+                    contentDescription = recipe.name,
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
-                        .clickable { selectedImageIndex = index }
+                        .clickable { selectedIndex = index }
                 )
             }
         }

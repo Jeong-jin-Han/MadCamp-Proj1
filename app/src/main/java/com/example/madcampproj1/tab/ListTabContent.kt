@@ -300,16 +300,8 @@ import androidx.compose.ui.Alignment
 
 import android.app.DatePickerDialog
 import java.util.Calendar
+import com.example.madcampproj1.model.Ingredient
 
-
-data class Ingredient(
-    val name: String,
-    val category: String,
-    val storage: String,
-    var isChecked: Boolean = false,
-    var expiry: String? = null,
-    var count: Int = 1
-)
 
 val categoryGroups = mapOf(
     "채소" to listOf("채소"),
